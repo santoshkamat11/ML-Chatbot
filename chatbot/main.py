@@ -73,4 +73,13 @@ textF.pack(fill=X , pady=10)
 
 btn=Button(main,text="Ask from Bot",font=("Verdana",20), command=ask_from_bot)
 btn.pack()
+
+# creating function for pressing enter
+def enter_function(event):
+    btn.invoke()
+
+
+# going to bind main window with enter key
+
+main.bind('<Return>',enter_function)
 main.mainloop()
