@@ -56,12 +56,13 @@ def ask_from_bot() :
     msgs.insert(END,"you : "+query)
     msgs.insert(END,"bot : "+str(answer_from_bot))
     textF.delete(0,END)
+    msgs.yview(END)
 
 
 frame = Frame(main)
 
 sc=Scrollbar(frame)
-msgs = Listbox(frame, width=80 , height=20)
+msgs = Listbox(frame, width=80 , height=20 , yscrollcommand=sc.set)
 
 sc.pack(side=RIGHT, fill=Y)
 msgs.pack(side=LEFT, fill=BOTH , pady=10)
