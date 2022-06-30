@@ -2,6 +2,8 @@ from chatterbot import  ChatBot
 from chatterbot.trainers import ListTrainer
 from tkinter import *
 import pyttsx3 as pp
+import speech_recognition as s
+import threading
 
 
 engine = pp.init()
@@ -64,6 +66,23 @@ photoL = Label(main,image=img)
 
 photoL.pack(pady=5)
 
+# take query . it takes audio from user and converts it to string
+def takeQuery():
+    sr = s.Recognizer()
+    sr.pause_threshold=1
+    print("your bot is listening try to speak")
+    with s.Microphone() as m:
+        try:
+            audio = sr.listen(m)
+            query = sr.recognize_google(audio, language='eng-in')
+            print(query)
+            textF.delete(0, END)
+            textF.insert(0, query)
+            ask_from_bot()
+        except Exception as e:
+            print(e)
+            print("not recognized")
+
 def ask_from_bot() :
     query = textF.get()
     answer_from_bot = bot.get_response(query)
@@ -98,4 +117,11 @@ def enter_function(event):
 # going to bind main window with enter key
 
 main.bind('<Return>',enter_function)
+
+def repeatL():
+    while True:
+        takeQuery()
+
+t = threading.Thread(target=repeatL)
+t.start()
 main.mainloop()
